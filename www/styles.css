@@ -191,11 +191,9 @@ div ul li span{
   display: flex;
   justify-content: center;
   padding-bottom: 10%;
-}
-
-#icons {
-  padding: 0 15%;
-  border-right: 55px solid transparent;
+  padding-left: 25%;
+  padding-right: 25%;
+  justify-content: space-around;
 }
 
 /* TEAM */
