@@ -174,7 +174,8 @@ div ul li span{
 
 /* CONTACTS */
 
-#c_main_text1{
+#c_main_text1
+  text-align: center;
   padding: 4% 46%;
   line-height: 1.5;
   font-size: 22px;
