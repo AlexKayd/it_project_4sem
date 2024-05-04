@@ -65,7 +65,7 @@ header {
   font-size: 22px;
   text-align: center;
   position: relative;
-  padding: 7% 0%;
+  padding: 7% 1%;
 }
 
 #icon {
@@ -142,7 +142,7 @@ div ul li span{
 
 .btn-group__b{
   display: flex;
-
+  padding-bottom: 6%;
 }
 
 .btn{
@@ -157,6 +157,7 @@ div ul li span{
 }
 
 .btn-group__text{
+  padding-top: 5%;
   font-size: 22px;
   text-align: center;
 }
