@@ -146,6 +146,10 @@ div ul li span{
   padding-bottom: 6%;
 }
 
+.btn:hover {
+  cursor: pointer;
+}
+
 .btn{
   color: #fff;
   background-color: #001A40;
