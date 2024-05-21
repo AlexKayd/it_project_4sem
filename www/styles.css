@@ -182,12 +182,20 @@ div ul li span{
   opacity: 0;
 }
 
-#loading {
+/* #loading {
   position: absolute;
   top: calc(50% - 25px);
   left: 48%;
   transform: translate(-50%, -50%);
+} */
+
+#loading {
+  position: absolute;
+  left: 48%;
+  top: 43%;
+  transform: translateY(-50%);
 }
+
 
 @keyframes spin{
   from{
