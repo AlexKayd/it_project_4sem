@@ -191,9 +191,13 @@ div ul li span{
 
 #loading {
   position: absolute;
-  left: 48%;
-  top: 43%;
-  transform: translateY(-50%);
+  left: 57%;
+  top: 18%;
+  /* transform: translateY(-50%); */
+}
+
+.btn-group {
+  position: relative;
 }
 
 
