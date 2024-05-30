@@ -77,11 +77,14 @@
 
 const showLoading = () => {
   document.getElementById("loading").classList.remove("hidden");
+  document.getElementById("file-label").classList.add("disabled");
 };
 
 // Hide loading indicator
 const hideLoading = () => {
   document.getElementById("loading").classList.add("hidden");
+  document.getElementById("file-label").classList.remove("disabled");
+
 };
 
 // Get file input element
@@ -139,9 +142,7 @@ inputFileBtn.addEventListener("change", async () => {
 alert(message);
 
   // Reload page after alert is closed
-  alert.onclose = () => {
     location.reload();
-  };
 
   // Get blob data
   const blob = await response.blob();
