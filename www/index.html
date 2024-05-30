@@ -9,17 +9,18 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 
+
 <body>
     <header>
         <div id="rectangle">
-            <img id="icon" , src="images/icon.png">
+            <img id="icon" , src="static/images/icon.png">
             <span id="IdentiFile">IdentiFile</span>
         </div>
         <nav>
             <ul>
                 <li><a href="/">Главная</a></li>
-                <li><a href="contacts.html">Контакты</a></li>
-                <li><a href="team.html">Команда</a></li>
+                <li><a href="contacts">Контакты</a></li>
+                <li><a href="team">Команда</a></li>
             </ul>
         </nav>
     </header>
@@ -39,25 +40,34 @@
             </ul>
             </p>
             <p>
-                <div class="btn-group">
-                    <p class="btn-group__text">Загрузка</p>
-                    <div id="loading" class="hidden loading"></div>
-                
-                    <div class="btn-group__b">
-                        <label id="file-label" class="btn" for="input-file-btn">
-                            <input type="file" id="input-file-btn" hidden accept=".pdf">
-                            Выберите файл
-                        </label>
-                    </div>
-                </div>                
+            <div class="btn-group">
+                <p class="btn-group__text">Загрузка</p>
+                <div id="loading" class="hidden loading"></div>
+
+                <div class="btn-group__b">
+                    <label class="btn" for="input-file-btn">
+                        <input type="file" id="input-file-btn" hidden accept=".pdf">
+                        Выберите файл
+                    </label>
+                </div>
+            </div>
             </p>
-        </p>
+
+            <!-- <p><div class="btn-group">
+                <p class="btn-group__text">Итог</p>
+                <div class="btn-group__b">
+                    <button class="btn" type="button">Скачать файл</button>
+                    <img src="" alt="">
+                </div>
+            </div></p> -->
+            </p>
         </div>
     </div>
 
+
     <footer>
         <div id="rectangle2">
-            <img id="icon2" , src="images/icon.png">
+            <img id="icon2" , src="../static/images/icon.png">
             <span id="IdentiFile2">IdentiFile, 2024</span>
         </div>
     </footer>
@@ -65,63 +75,92 @@
 
 <script>
 
-    const showLoading = () => {
-        document.getElementById("loading").classList.remove("hidden");
-        document.getElementById("file-label").classList.add("disabled");
-    };
-    
-    const hideLoading = () => {
-        document.getElementById("loading").classList.add("hidden");
-        document.getElementById("file-label").classList.remove("disabled");
-    };
+const showLoading = () => {
+  document.getElementById("loading").classList.remove("hidden");
+};
 
-    // Получить элемент кнопки
-    const inputFileBtn = document.getElementById("input-file-btn");
+// Hide loading indicator
+const hideLoading = () => {
+  document.getElementById("loading").classList.add("hidden");
+};
 
-    // Обработчик события изменения файла
-    inputFileBtn.addEventListener("change", async () => {
-        // Получить выбранный файл
-        const file = inputFileBtn.files[0];
+// Get file input element
+const inputFileBtn = document.getElementById("input-file-btn");
 
-        // Проверить тип файла
-    if (file.type !== "application/pdf") {
-        alert("Пожалуйста, выберите файл PDF.");
-        return; // Прервать обработку, если файл не является PDF
-        
-    } else {
-        showLoading();
+// File change event handler
+inputFileBtn.addEventListener("change", async () => {
+  // Get selected file
+  const file = inputFileBtn.files[0];
 
-}
+  // Check file type
+  if (file.type !== "application/pdf") {
+    alert("Пожалуйста, выберите файл PDF.");
+    return; // Stop processing if file is not PDF
+  } else {
+    showLoading();
+  }
 
-        // Создать форму для отправки файла
-        const formData = new FormData();
-        const token = "lYHDhUpXoGjt5j0Aj7EA3hKOKxuyKfqRzqtJWxSW4oFA5DZ3XIyEHcq8oCkLxMFG";
+  // Create form data
+  const formData = new FormData();
+  const token =
+    "lYHDhUpXoGjt5j0Aj7EA3hKOKxuyKfqRzqtJWxSW4oFA5DZ3XIyEHcq8oCkLxMFG";
 
-        formData.append("file", file);
-        formData.append("token", 'lYHDhUpXoGjt5j0Aj7EA3hKOKxuyKfqRzqtJWxSW4oFA5DZ3XIyEHcq8oCkLxMFG')
+  formData.append("file", file);
+  formData.append("token", token);
 
-        // Отправить POST-запрос
-        const response = await fetch("https://identifile.ru:3000/api/check", {
-            method: "POST",
-            // mode: "cors",
-            body: formData,
-        });
+  // Send POST request
+  const response = await fetch("https://identifile.ru:3000/api/check", {
+    method: "POST",
+    body: formData,
+  });
 
-        console.log(response)
+  // Get response headers
+  const headers = response.headers;
 
-        // Получить другой файл с сервера
-        const blob = await response.blob();
+  // Get Detected header value
+  const detected = headers.get("Detected");
 
-        // Создать ссылку для скачивания файла
-        const downloadLink = document.createElement("a");
-        downloadLink.href = URL.createObjectURL(blob);
-        downloadLink.download = "output.pdf";
-        hideLoading();
+  // Parse Detected header value as JSON
+  const detectedJson = JSON.parse(detected);
 
-        // Начать скачивание файла
-        downloadLink.click();
-        window.location.reload();
-    });
+  // Create alert message
+//   let alertMessage = "";
+      let message = "*Обнаружено:*\n";
+    message += '- Печать: ' + detectedJson.stamp + '\n';
+    message += '- Соглашение: ' + detectedJson.agreement + '\n';
+    message += '- Счет: ' + detectedJson.invoice + '\n';
+    message += '- Подпись: ' + detectedJson.signature;
+//   for (const key in detectedJson) {
+//     alertMessage += key + detectedJson[key] + '\n';
+//   }
+
+  // Display alert with Detected values
+//   alert(alertMessage);
+alert(message);
+
+  // Reload page after alert is closed
+  alert.onclose = () => {
+    location.reload();
+  };
+
+  // Get blob data
+  const blob = await response.blob();
+
+  // Create download link
+  const downloadLink = document.createElement("a");
+  downloadLink.href = URL.createObjectURL(blob);
+  downloadLink.download = "output.pdf";
+
+  hideLoading();
+
+  // Start file download
+  downloadLink.click();
+});
+
+
+
 </script>
+
+
 
 </html>
