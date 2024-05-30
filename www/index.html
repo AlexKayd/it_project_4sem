@@ -98,6 +98,7 @@ inputFileBtn.addEventListener("change", async () => {
   // Check file type
   if (file.type !== "application/pdf") {
     alert("Пожалуйста, выберите файл PDF.");
+    inputFileBtn.value = "";
     return; // Stop processing if file is not PDF
   } else {
     showLoading();
@@ -142,7 +143,7 @@ inputFileBtn.addEventListener("change", async () => {
 alert(message);
 
   // Reload page after alert is closed
-    location.reload();
+  //  location.reload();
 
   // Get blob data
   const blob = await response.blob();
@@ -156,6 +157,7 @@ alert(message);
 
   // Start file download
   downloadLink.click();
+  inputFileBtn.value = "";
 });
 
 
